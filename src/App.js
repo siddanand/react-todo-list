@@ -5,16 +5,9 @@ const reducer = (state, action) => {
     state = [...state, action.value];
     return state;
   } else if (action.type === "delete") {
-    // let arr = [];
-    // state.map((item, index) => {
-    //   if (index !== action.value) {
-    //     arr.push(item);
-    //   }
-    // });
-    state.splice(action.value, 1);
-    console.log(state);
-    state = [...state];
-    return state;
+    return state.filter((item, index) => {
+      return index !== action.value;
+    });
   } else if (action.type === "edit") {
     state[action.value[1]] = action.value[0];
     state = [...state];
@@ -34,7 +27,7 @@ export default function App() {
       </button>
       {list.map((item, index) => {
         return (
-          <div>
+          <div key={`${item}-${index}`}>
             {item}{" "}
             <input type="text" onChange={(e) => setEdit(e.target.value)} />
             <button
